@@ -21,4 +21,4 @@ def read_root():
 @app.post("/analyze")
 async def analyze_file(file: UploadFile = File(...)):
     contents = await file.read()
-    return service.analyze_csv(file.filename, contents)
+    return service.analyze_file(file.filename, contents)

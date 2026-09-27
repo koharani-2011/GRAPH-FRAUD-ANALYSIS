@@ -19,8 +19,12 @@ class FraudDetectionService:
         self.model = EvolveGCNModel(self.num_features, 2).to(self.device)
         self.model.eval()
 
-    def analyze_csv(self, filename: str, contents: bytes):
-        df = pd.read_csv(io.BytesIO(contents))
+    def analyze_file(self, filename: str, contents: bytes):
+        if filename.lower().endswith(('.xlsx', '.xls')):
+            df = pd.read_excel(io.BytesIO(contents))
+        else:
+            df = pd.read_csv(io.BytesIO(contents))
+        
         num_nodes = len(df)
         
         if num_nodes == 0:
